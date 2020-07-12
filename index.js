@@ -1,15 +1,18 @@
 const adapter = new APIAdapter("http://localhost:3000/bakes")
 
+// DOM elements
 const newBakeForm = document.querySelector('#new-bake-form')
 const bakesContainer = document.querySelector('#bakes-container')
-
 const judgeBtn = document.querySelector('#judge-bake-button')
-judgeBtn.addEventListener('click', (event) => {
-  adapter.bakeWinner()
-  .then(bakeWinner => {
-    const winner = document.querySelector(`li[data-id="${bakeWinner.id}"]`)
-    winner.classList.add("winner")
-  })
+
+const judgeButton = new JudgeButton(judgeBtn, {
+  onClick: () => {
+    adapter.bakeWinner()
+    .then(bakeWinner => {
+      const winner = document.querySelector(`li[data-id="${bakeWinner.id}"]`)
+      winner.classList.add("winner")
+    })
+  }
 })
 
 const bakeForm = new BakeForm(newBakeForm, {
@@ -39,7 +42,7 @@ function renderAllBakes(bakes) {
   })
 }
 
-// fetch data
+// Initial fetch
 adapter.fetchInitialData()
 .then(bakes => {
   renderAllBakes(bakes)

@@ -15,5 +15,4 @@ class BakeForm {
     }
     this.onSubmit(data)
   }
-
 }
